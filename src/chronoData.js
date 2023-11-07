@@ -99,4 +99,4 @@ export const chronoData = [
     "turnEffect": ["所有成員以 100% 攻擊力追打水屬性攻擊 1 次", "將自身直行的符石轉化為水符石", "自身無視「十字限盾」"],
     "linkageEffect": "自身攻擊力提升 200%"
   }
-    ]
+]

@@ -8,9 +8,42 @@ function App() {
   const [selectedLinkageEffect, setSelectedLinkageEffect] = useState('');
   const [searchKeyword, setSearchKeyword] = useState('');
 
-  const uniqueInstantEffects = [...new Set(chronoData.map(item => item.instantEffect))];
-  const uniqueTurnEffects = [...new Set(chronoData.flatMap(item => item.turnEffect))];
-  const uniqueLinkageEffects = [...new Set(chronoData.flatMap(item => item.linkageEffect.split('\n').map(effect => effect.trim())))];
+  const uniqueInstantEffects = ['不限', ...new Set(chronoData.map(item => {
+    const trimmedInstantEffect = item.instantEffect;
+    const keywords = ['CD', 'Combo', '亢奮'];
+    for (const keyword of keywords) {
+      if (trimmedInstantEffect.includes(keyword)) {
+        return keyword;
+      }
+    }
+    return trimmedInstantEffect;
+  }))];
+
+  const uniqueTurnEffects = ['不限', ...new Set(chronoData.flatMap(item =>
+    item.turnEffect.map(effect => 
+      (effect.includes('追打') ? '追打' : 
+      effect.includes('攻擊力提升') ? '攻擊力提升' :
+      effect.includes('回復力提升') ? '回復力提升' :
+      effect.includes('燃燒') ? '燃燒' :
+      effect.includes('黏腐') ? '黏腐' :
+      effect.includes('五屬盾') ? '五屬盾' :
+      effect.includes('十字限盾') ? '十字限盾' :
+      effect.includes('轉化為') ? '直行轉化' :
+      effect)
+    )
+  ))];
+
+  const uniqueLinkageEffects = ['不限', ...new Set(chronoData.flatMap(item => {
+    const trimmedInstantEffect = item.linkageEffect.split('\n').map(effect => effect.trim());
+    console.log(trimmedInstantEffect);
+    const keywords = ['固定連擊盾', '五屬盾', '指定形狀盾', '攻擊力提升', 'CD'];
+    for (const keyword of keywords) {
+      if (trimmedInstantEffect[0].includes(keyword)) {
+        return keyword;
+      }
+    }
+    return trimmedInstantEffect;
+  }))];
 
   const toggleSelectedInstantEffect = (effect) => {
     if (selectedInstantEffect === effect) {
@@ -38,13 +71,13 @@ function App() {
 
   const filterData = () => {
     return chronoData.filter(item => {
-      const matchesInstantEffect = !selectedInstantEffect || item.instantEffect.includes(selectedInstantEffect);
-      const matchesTurnEffect = !selectedTurnEffect || item.turnEffect.includes(selectedTurnEffect);
-      const matchesLinkageEffect = !selectedLinkageEffect || item.linkageEffect.includes(selectedLinkageEffect);
+      const matchesInstantEffect = selectedInstantEffect === '不限' || !selectedInstantEffect || item.instantEffect.includes(selectedInstantEffect);
+      const matchesTurnEffect = selectedTurnEffect === '不限' || !selectedTurnEffect || item.turnEffect.some(element => element.includes(selectedTurnEffect));
+      const matchesLinkageEffect = selectedLinkageEffect === '不限' || !selectedLinkageEffect || item.linkageEffect.includes(selectedLinkageEffect);
       const matchesSearchKeyword = !searchKeyword ||
         item.Name.includes(searchKeyword) ||
         item.instantEffect.includes(searchKeyword) ||
-        item.turnEffect.includes(searchKeyword) ||
+        item.turnEffect.some(element => element.includes(searchKeyword)) ||
         item.linkageEffect.includes(searchKeyword);
 
       return matchesInstantEffect && matchesTurnEffect && matchesLinkageEffect && matchesSearchKeyword;
@@ -55,7 +88,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>時光牌搜尋器</h1>
+      <h1>流光系統搜尋器</h1>
 
       <div className="filters">
         <div className="filter">
@@ -66,7 +99,7 @@ function App() {
                 type="radio"
                 name="instantEffect"
                 value={effect}
-                checked={selectedInstantEffect === effect}
+                checked={selectedInstantEffect === effect || (effect === '不限' && !selectedInstantEffect)}
                 onChange={() => toggleSelectedInstantEffect(effect)}
               />
               {effect}
@@ -82,7 +115,7 @@ function App() {
                 type="radio"
                 name="turnEffect"
                 value={effect}
-                checked={selectedTurnEffect === effect}
+                checked={selectedTurnEffect === effect || (effect === '不限' && !selectedTurnEffect)}
                 onChange={() => toggleSelectedTurnEffect(effect)}
               />
               {effect}
@@ -98,7 +131,7 @@ function App() {
                 type="radio"
                 name="linkageEffect"
                 value={effect}
-                checked={selectedLinkageEffect === effect}
+                checked={selectedLinkageEffect === effect || (effect === '不限' && !selectedLinkageEffect)}
                 onChange={() => toggleSelectedLinkageEffect(effect)}
               />
               {effect}
