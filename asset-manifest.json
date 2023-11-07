@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/tosChrono/static/css/main.2fde6d08.css",
+    "main.css": "/tosChrono/static/css/main.7a9705ba.css",
     "main.js": "/tosChrono/static/js/main.c58011d6.js",
     "index.html": "/tosChrono/index.html",
-    "main.2fde6d08.css.map": "/tosChrono/static/css/main.2fde6d08.css.map",
+    "main.7a9705ba.css.map": "/tosChrono/static/css/main.7a9705ba.css.map",
     "main.c58011d6.js.map": "/tosChrono/static/js/main.c58011d6.js.map"
   },
   "entrypoints": [
-    "static/css/main.2fde6d08.css",
+    "static/css/main.7a9705ba.css",
     "static/js/main.c58011d6.js"
   ]
 }
