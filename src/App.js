@@ -88,7 +88,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>流光系統搜尋器</h1>
+      <h1>時光牌搜尋器｜流光連動</h1>
 
       <div className="filters">
         <div className="filter">
@@ -152,7 +152,10 @@ function App() {
 
       <div className="results">
         {filteredData.map((item, index) => (
-          <div key={index} className="result-item">
+          <div key={index} className="result-item" style={{ display: 'flex'}}>
+            <div>
+              <img src={`https://hiteku.github.io/img/tos/chronon/-/CHRONON_1_${index+1}.png`} alt="img" style={{ width: '100px' }}/>
+            </div><div style={{ marginLeft: '10px', fontSize: '14px'  }}>
             <h3>{item.Name}</h3>
             <p>即時效果：{item.instantEffect}</p>
             <p>回合效果：</p>
@@ -162,6 +165,7 @@ function App() {
               ))}
             </ul>
             <p>連動效果：{item.linkageEffect}</p>
+            </div>
           </div>
         ))}
       </div>

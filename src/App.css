@@ -7,7 +7,7 @@
 body {
   background-color: #333;
   color: #fff;
-  padding: 0px 100px 0px;
+  padding: 0px 10px 0px;
 }
 
 .App {
@@ -77,12 +77,12 @@ input[type="text"] {
 
 .result-item h3 {
   font-size: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 
 .result-item p {
   font-size: 14px;
-  margin-bottom: 5px;
+  margin-top: 15px;
 }
 
 .turn-effect-list {
